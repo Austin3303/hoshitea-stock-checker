@@ -20,7 +20,7 @@ def send_line_message(message):
     )
 
 def check_stock():
-    url = 'url = 'https://www.hoshitea.com/shop/item?category_id=40025''
+    url = 'https://www.hoshitea.com/shop/item?category_id=40025&pageno=1'
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept-Language': 'ja,en;q=0.9'
@@ -35,11 +35,17 @@ def check_stock():
     data = json.loads(match.group(1).replace('&quot;', '"').replace('&amp;', '&'))
     products = data['props']['products']
     
+    print(f'พบสินค้าทั้งหมด {len(products)} รายการ')
+    for p in products:
+        stock = p['product_classes'][0]['stock']
+        unlimited = p['product_classes'][0]['stock_unlimited']
+        print(f"- {p['name'][:30]} | stock: {stock} | unlimited: {unlimited}")
+    
     back_in_stock = []
     for p in products:
         stock = p['product_classes'][0]['stock']
         unlimited = p['product_classes'][0]['stock_unlimited']
-        if stock >= 0 or unlimited == 1:
+        if stock > 0 or unlimited == 1:
             name = p['name'].replace('【SOLD OUT】', '').strip()
             back_in_stock.append(name)
     
@@ -47,16 +53,10 @@ def check_stock():
         msg = '🍵 มีสินค้ากลับมาแล้ว!\n\n'
         for i, name in enumerate(back_in_stock, 1):
             msg += f'{i}. {name}\n'
-        msg += '\n🔗 https://www.hoshitea.com/shop/item?category_id=5&pageno=1'
+        msg += '\n🔗 https://www.hoshitea.com/shop/item?category_id=40025&pageno=1'
         send_line_message(msg)
         print('แจ้งเตือนแล้ว!')
     else:
         print('ยังหมดอยู่ทุกตัว')
-
-        print(f'พบสินค้าทั้งหมด {len(products)} รายการ')
-for p in products:
-    stock = p['product_classes'][0]['stock']
-    unlimited = p['product_classes'][0]['stock_unlimited']
-    print(f"- {p['name'][:30]} | stock: {stock} | unlimited: {unlimited}")
 
 check_stock()
