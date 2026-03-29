@@ -1,0 +1,20 @@
+name: Check Hoshitea Stock
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # รันทุกชั่วโมง
+  workflow_dispatch:       # รันมือได้ด้วย
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - run: python check_stock.py
+        env:
+          LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
+          USER_ID: ${{ secrets.USER_ID }}
