@@ -20,7 +20,7 @@ def send_line_message(message):
     )
 
 def check_stock():
-    url = 'https://www.hoshitea.com/shop/item?category_id=5&pageno=1'
+    url = 'url = 'https://www.hoshitea.com/shop/item?category_id=40025&pageno=1''
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
         'Accept-Language': 'ja,en;q=0.9'
