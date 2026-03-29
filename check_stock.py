@@ -41,7 +41,7 @@ def check_stock():
     for p in products:
         stock = p['product_classes'][0]['stock']
         unlimited = p['product_classes'][0]['stock_unlimited']
-        if stock >= 0 or unlimited == 1:
+        if stock > 0 or unlimited == 1:
             name = p['name'].replace('SOLD OUT', '').strip()
             back_in_stock.append(name)
     if back_in_stock:
