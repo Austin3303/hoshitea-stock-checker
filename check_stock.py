@@ -53,4 +53,10 @@ def check_stock():
     else:
         print('ยังหมดอยู่ทุกตัว')
 
+        print(f'พบสินค้าทั้งหมด {len(products)} รายการ')
+for p in products:
+    stock = p['product_classes'][0]['stock']
+    unlimited = p['product_classes'][0]['stock_unlimited']
+    print(f"- {p['name'][:30]} | stock: {stock} | unlimited: {unlimited}")
+
 check_stock()
